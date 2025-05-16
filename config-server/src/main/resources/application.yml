@@ -20,7 +20,7 @@ spring:
      uri: ${CONFIG_SERVER_URI:https://github.com/joanersoncosta/cliente-teste-server-configs}
      default-label: main
      username: ${CONFIG_SERVER_USERNAME:123456@gmail.com}
-     password: ${CONFIG_SERVER_PASSWORD:123456}
+     password: ${CONFIG_SERVER_PASSWORD:1234567}
       
 server:
  port: ${PORT:8888}     
