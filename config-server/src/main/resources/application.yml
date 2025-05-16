@@ -1,0 +1,23 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, bus-refresh
+  endpoint:
+    health:
+      show-details: always
+      
+spring:
+ application:
+  name: config-server
+ cloud: 
+  config:
+   server:
+    git:
+     uri: ${CONFIG_SERVER_URI:https://github.com/joanersoncosta/cliente-teste-server-configs}
+     default-label: main
+     username: ${CONFIG_SERVER_USERNAME:teste@gmail.com}
+     password: ${CONFIG_SERVER_PASSWORD:123456}
+      
+server:
+ port: ${PORT:8888}     

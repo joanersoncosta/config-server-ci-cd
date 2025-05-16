@@ -1,0 +1,17 @@
+services:
+  # RabbitMQ para Spring Cloud Bus
+  rabbitmq-config:
+    image: "rabbitmq:management"
+    container_name: "rabbitmq"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"   # Porta para comunicação do RabbitMQ
+      - "15672:15672" # Porta para a interface de gerenciamento do RabbitMQ (acessível em http://localhost:15672)
+    networks:
+      - spring-cloud-network
+      
+networks:
+  spring-cloud-network:
+    driver: bridge      
