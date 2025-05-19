@@ -31,9 +31,16 @@ jobs:
 
     - name: Build Docker Image
       working-directory: ./config-server
+      env:
+        CONFIG_SERVER_URI: ${{ secrets.CONFIG_SERVER_URI }}
+        CONFIG_SERVER_USERNAME: ${{ secrets.CONFIG_SERVER_USERNAME }}
+        CONFIG_SERVER_PASSWORD: ${{ secrets.CONFIG_SERVER_PASSWORD }}
       run: |
         cp target/*.jar app.jar
-        docker build -t joanersoncosta/config-server-ci:latest --build-arg JAR_FILE=app.jar .
+        docker build --build-arg CONFIG_SERVER_URI=$CONFIG_SERVER_URI \
+                     --build-arg CONFIG_SERVER_USERNAME=$CONFIG_SERVER_USERNAME \
+                     --build-arg CONFIG_SERVER_PASSWORD=$CONFIG_SERVER_PASSWORD \
+                     -t joanersoncosta/config-server-ci:latest .
 
     - name: Push Docker Image
       run: |
