@@ -29,13 +29,20 @@ jobs:
       working-directory: ./config-server
       run: mvn clean package
 
-    - name: Docker Compose Build
+    - name: Build Docker Image
       working-directory: ./config-server
-      run: docker compose build
+      run: |
+          cp target/*.jar app.jar
+          docker build -t joanersoncosta/config-server-ci:latest --build-arg JAR_FILE=app.jar .
 
-    - name: Push Docker Hub
-      run: 
-        docker tag joanersoncosta/config-server-ci:latest joanersoncosta/config-server-ci:${{ github.run_id }}
+    - name: Docker Login
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Push Docker Image
+      run: |
+          docker tag joanersoncosta/config-server-ci:latest joanersoncosta/config-server-ci:${{ github.run_id }}
+          docker push joanersoncosta/config-server-ci:latest
+          docker push joanersoncosta/config-server-ci:${{ github.run_id }}
         
         docker push joanersoncosta/config-server-ci:${{ github.run_id }}
         docker push joanersoncosta/config-server-ci:latest
