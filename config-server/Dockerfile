@@ -1,9 +1,9 @@
-FROM openjdk
+FROM openjdk:17
 
-ARG JAR_FILE=./target/*.jar
+ARG JAR_FILE=app.jar
+
+COPY ${JAR_FILE} app.jar
 
 EXPOSE 8888
 
-COPY ${JAR_FILE} config-server.jar
-
-ENTRYPOINT ["java", "-jar", "config-server.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
